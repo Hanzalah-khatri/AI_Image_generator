@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PixelForge AI - Image Generator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+   <header class="navbar">
+
+        <div class="brand">
+            <span class="brand-icon">✦</span>
+            <span>PixelForge AI</span>
+        </div>
+
+        <div class="navbar-actions">
+
+            <button
+                id="themeToggle"
+                class="theme-toggle"
+                title="Toggle theme"
+            >
+                ☀️
+            </button>
+
+            <div class="badge">
+                AI IMAGE GENERATOR
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <p class="eyebrow">
+                TURN WORDS INTO ART
+            </p>
+
+            <h1>
+                Create images from your imagination.
+            </h1>
+
+            <p class="subtitle">
+                Describe what you want to see and let AI
+                transform your prompt into an image.
+            </p>
+
+        </section>
+
+
+        <!-- GENERATOR -->
+        <section class="generator-card">
+
+
+            <!-- LEFT SIDE -->
+            <div class="input-section">
+
+                <label for="prompt">
+                    Your Prompt
+                </label>
+
+                <textarea
+                    id="prompt"
+                    maxlength="1000"
+                    placeholder="Example: A futuristic city at sunset, flying cars, neon lights, cinematic atmosphere..."
+                ></textarea>
+              
+                <div class="prompt-footer">
+
+                    <span>
+                        Describe your image in detail
+                    </span>
+
+                    <span id="charCount">
+                        0 / 1000
+                    </span>
+
+                </div>
+
+
+                <!-- CONTROLS -->
+                <div class="controls">
+
+                    <div class="control-group">
+
+                        <label for="style">
+                            Style
+                        </label>
+
+                        <select id="style">
+
+                            <option value="None">
+                                None
+                            </option>
+
+                            <option value="Photorealistic">
+                                Photorealistic
+                            </option>
+
+                            <option value="Anime">
+                                Anime
+                            </option>
+
+                            <option value="Cinematic">
+                                Cinematic
+                            </option>
+
+                            <option value="Digital Art">
+                                Digital Art
+                            </option>
+
+                            <option value="Watercolor">
+                                Watercolor
+                            </option>
+
+                            <option value="3D Render">
+                                3D Render
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        id="generateBtn"
+                        class="generate-btn"
+                    >
+
+                        <span id="buttonText">
+                            ✨ Generate Image
+                        </span>
+
+                        <span
+                            id="loader"
+                            class="loader hidden"
+                        ></span>
+
+                    </button>
+
+                </div>
+
+
+                <!-- ERROR / MESSAGE -->
+                <p
+                    id="message"
+                    class="message"
+                ></p>
+
+            </div>
+
+
+            <!-- RIGHT SIDE -->
+            <div class="preview-section">
+
+                <div class="preview-header">
+
+                    <h2>
+                        Preview
+                    </h2>
+
+                    <span id="status">
+                        Waiting for prompt
+                    </span>
+
+                </div>
+
+
+                <!-- IMAGE PREVIEW -->
+                <div
+                    id="previewBox"
+                    class="preview-box"
+                >
+
+                    <!-- EMPTY STATE -->
+                    <div
+                        id="emptyState"
+                        class="empty-state"
+                    >
+
+                        <div class="empty-icon">
+                            ◈
+                        </div>
+
+                        <h3>
+                            Your generated image
+                            will appear here
+                        </h3>
+
+                        <p>
+                            Enter a prompt and click
+                            Generate Image.
+                        </p>
+
+                    </div>
+
+
+                    <!-- IMAGE STATE -->
+                    <div
+                        id="imageState"
+                        class="image-state hidden"
+                    >
+
+                        <img
+                            id="generatedImage"
+                            src=""
+                            alt="AI generated image"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- DOWNLOAD BUTTON -->
+                <a
+                    id="downloadBtn"
+                    class="download-btn hidden"
+                    href="#"
+                    download
+                >
+                    ↓ Download Image
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+        <section class="features">
+
+
+            <div class="feature">
+
+                <span>✎</span>
+
+                <div>
+
+                    <h3>
+                        Describe
+                    </h3>
+
+                    <p>
+                        Write any scene, character
+                        or idea.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span>✦</span>
+
+                <div>
+
+                    <h3>
+                        Generate
+                    </h3>
+
+                    <p>
+                        AI turns your words
+                        into an image.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span>↓</span>
+
+                <div>
+
+                    <h3>
+                        Download
+                    </h3>
+
+                    <p>
+                        Save your generated
+                        artwork.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+<!-- IMAGE GALLERY / HISTORY -->
+<section class="history-section">
+
+    <div class="history-header">
+
+        <div>
+            <p class="eyebrow">YOUR CREATIONS</p>
+
+            <h2>Image Gallery</h2>
+
+            <p class="gallery-subtitle">
+                Browse, preview and download your generated artwork.
+            </p>
+        </div>
+
+        <button
+            id="clearHistoryBtn"
+            class="clear-btn"
+        >
+            🗑 Clear History
+        </button>
+
+    </div>
+
+
+    <!-- GALLERY -->
+    <div
+        id="historyGrid"
+        class="history-grid"
+    >
+
+        <!-- JavaScript will add images here -->
+
+    </div>
+
+</section>
+
+
+<!-- IMAGE MODAL -->
+<div
+    id="imageModal"
+    class="image-modal hidden"
+>
+
+    <div class="modal-content">
+
+        <button
+            id="closeModal"
+            class="close-modal"
+        >
+            ✕
+        </button>
+
+
+        <img
+            id="modalImage"
+            src=""
+            alt="Full size generated image"
+        >
+
+
+        <div class="modal-info">
+
+            <h3 id="modalPrompt">
+                Prompt
+            </h3>
+
+            <p id="modalStyle">
+                Style
+            </p>
+
+            <p id="modalDate">
+                Date
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+    <!-- FOOTER -->
+    <footer>
+
+        <p>
+            Built with Python + Flask + Hugging Face AI
+        </p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
