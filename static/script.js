@@ -294,11 +294,10 @@ function saveToHistory(
     history.unshift(imageData);
 
 
-    /* Keep latest 12 */
+    /* Keep latest 5 */
 
     history =
-        history.slice(0, 12);
-
+        history.slice(0, 5);
 
     localStorage.setItem(
         "imageHistory",
